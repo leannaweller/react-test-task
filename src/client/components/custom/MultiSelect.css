@@ -1,0 +1,42 @@
+.multiselect{
+  margin-top: 20px;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  & .selected-colors{
+    display: flex;
+    padding: 0 10px;
+  }
+  & .color-span{
+    display: block;
+    height: 15px;
+    width: 15px;
+    margin-right: 5px;
+  }
+  & .area{
+    color: var(--crimson);
+    display: flex;
+  }
+  & i {
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  & ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    & li{
+      padding: 10px;
+      cursor: pointer;
+    }
+  }
+  & .list {
+    position: absolute;
+    top: 24px;
+    z-index: 10;
+    margin-bottom: 20px;
+  }
+}
+
+:root {
+  --crimson: #e91e63;
+}

@@ -20,9 +20,9 @@ module.exports = {
                 test: /\.jsx?/i,
                 loader: 'babel-loader',
                 options: {
-                    presets: ['env'],
+                    presets: ['env',"react", "stage-0"],
                     plugins: [
-                        ['transform-react-jsx']
+                        ['transform-react-jsx','transform-object-rest-spread']
                     ]
                 }
             },
@@ -40,8 +40,6 @@ module.exports = {
             }
         ]
     },
-
-
 
     devtool: 'source-map',
 
