@@ -7,7 +7,6 @@ export default class MultiSelect extends Component {
   constructor(props){
     super(props);
     this.state = {
-      selected:[],
       show: false
     }
   }
@@ -17,29 +16,31 @@ export default class MultiSelect extends Component {
   }
 
   hasColor = (color) => {
-    const {selected} = this.state;
-    const res  = selected.filter(el => el.hex == color.hex);
+    const {colors} = this.props;
+    const res  = colors.filter(el => el.hex == color.hex);
     return res.length ? true : false;
   }
   render() {
-    const {options} = this.props;
-    const {show,selected} = this.state;
-    let _selected = selected.slice();
+    const {options,colors,error} = this.props;
+    const {show} = this.state;
+    let _colors = colors.slice();
     return (
       <div className="multiselect">
         <div className="area">Select colors:
           <div className="selected-colors">
             {
-              selected.map(color =>
+              (error && error.colors) ?
+              <span className="error">{error.colors}</span>
+              :
+              colors.map(color =>
                 <span className="color-span"
                   style={{backgroundColor:color.hex}}
                   key={color.hex}
                   onClick={()=>{
-                    _selected = _selected.filter(item => color.hex != item.hex);
-                    this.setState({selected:_selected});
-                    this.emitChange(_selected);
+                    this.emitChange(this.hasColor(item));
                   }}>
                 </span>)
+
             }
           </div>
           <i className="ion-arrow-down-b"
@@ -54,9 +55,9 @@ export default class MultiSelect extends Component {
                 options.map(option => <li style={{backgroundColor:`${option.hex}`}}
                   onClick={() => {
                     if(!this.hasColor(option)){
-                      _selected.push(option);
-                      this.setState({selected:_selected,show:false});
-                      this.emitChange(_selected);
+                      _colors.push(option);
+                      this.setState({show:false});
+                      this.emitChange(_colors);
                     }
                   }}
                   key={option.rgb}>

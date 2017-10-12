@@ -3,7 +3,7 @@ export const addItem = (data) => ({
   data
 });
 
-export const deleteItem = (uid) => ({
+export const deleteItem = (id) => ({
   type: 'DELETE_ITEM',
-  uid
+  id
 })

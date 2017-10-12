@@ -3,6 +3,9 @@
   & h3{
     color: var(--crimson);
   }
+  & .error{
+    color: red;
+  }
 }
 
 :root {

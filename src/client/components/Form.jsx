@@ -3,7 +3,7 @@ import MultiSelect from './custom/MultiSelect.jsx';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import colors from '../colors.json';
+import options from '../colors.json';
 import uid from 'uid';
 
 import './Form.css';
@@ -30,7 +30,19 @@ export default class Form extends Component {
   submit = () => {
     const {addItem} = this.props;
     const {text,colors} = this.state;
-    addItem({name:text, colors, id:uid()});
+    let error = null;
+    if(!colors.length || (text.length < 4 || text.length >8)){
+      error = {};
+      if(!colors.length){
+        error.text = 'Invalid text';
+      }
+      if (text.length < 4 || text.length >8){
+        error.colors = 'Invalid colors';
+      }
+    }else{
+      addItem({name:text, colors, id:uid()});
+    }
+    this.setState({text:'',colors:[],error});
   }
   render(){
     const style = {
@@ -38,7 +50,7 @@ export default class Form extends Component {
         margin:'50px auto',
         padding:'30px'
       }
-    const {error} = this.state;
+    const {error,text,colors} = this.state;
     return (
       <Paper style={style}>
         <form action="" className="item-form">
@@ -46,11 +58,15 @@ export default class Form extends Component {
           <TextField
             hintText="Radiator"
             floatingLabelText="Name"
-            errorText={error ? "Invalid name" : ""}
+            errorText={(error && error.text) ? "Invalid name" : "" }
+            value={text}
             onChange={(e) => this.handleChange(e,'text')}/>
           <MultiSelect
             onChange={(e) => this.handleChange(e,'select')}
-            options={colors.slice(0,12)}/>
+            options={options.slice(0,12)}
+            colors={colors}
+            error={error}
+            />
           <RaisedButton
             secondary={true}
             style={{marginTop:'20px'}}
